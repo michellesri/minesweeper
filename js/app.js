@@ -10,13 +10,13 @@ function playGame() {
     for (let j = 0; j < 10; j++) {
       const cell = minesweeper.board[i][j];
       if (cell.isBomb) {
-        row.append($('<div class="cell bomb"></div>'));
+        row.append($('<img class="bomb"></img>'));
       } else if (cell.isFlagged) {
-        row.append($('<div class="cell flagged"></div>'));
+        row.append($('<img class="flagged"></img>'));
       } else if (cell.isRevealed) {
-        row.append($('<div class="cell revealed"></div>'));
+        row.append($('<img class="revealed"></img>'));
       } else {
-        row.append($('<div class="cell"></div>'));
+        row.append($('<img class="cell"></img>'));
       }
     }
     board.append(row);

@@ -4,20 +4,21 @@
 }
 
 .cell {
-  height: 50px;
-  width: 50px;
-  margin: 5px;
-  background-color: gray;
+  content: url("./images/cell.png");
 }
 
 .bomb {
-  background-color: red;
+  content: url("./images/bomb.png");
 }
 
 .flagged {
-  background-color: green;
+  content: url("./images/flag.png");
+}
+
+.misflagged {
+  content: url("./images/flag-wrong.png");
 }
 
 .revealed {
-  background-color: blue;
+  content: url("./images/cell-revealed.png");
 }
