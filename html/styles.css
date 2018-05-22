@@ -1,0 +1,23 @@
+.row {
+  display: flex;
+  flex-flow: row;
+}
+
+.cell {
+  height: 50px;
+  width: 50px;
+  margin: 5px;
+  background-color: gray;
+}
+
+.bomb {
+  background-color: red;
+}
+
+.flagged {
+  background-color: green;
+}
+
+.revealed {
+  background-color: blue;
+}

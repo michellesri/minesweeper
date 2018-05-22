@@ -1,4 +1,4 @@
-class Minesweeper {
+ class Minesweeper {
 
   constructor(dimension, numBombs) {
     this.dimension = dimension;
@@ -19,6 +19,3 @@ class Minesweeper {
     this.board[1][5].isFlagged = true
   }
 }
-
-const minesweeper = new Minesweeper(10, 10);
-console.log(minesweeper.board);
