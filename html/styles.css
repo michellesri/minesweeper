@@ -3,6 +3,17 @@
   flex-flow: row;
 }
 
+.cell-wrapper {
+  display: flex;
+  position: relative;
+}
+
+.bomb-count {
+  width: 39px;
+  height: 39px;
+  position: absolute;
+}
+
 .cell {
   content: url("./images/cell.png");
 }

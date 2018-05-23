@@ -9,18 +9,29 @@ function playGame() {
     const row = $('<div class="row"></div>');
     for (let j = 0; j < 10; j++) {
       const cell = minesweeper.board[i][j];
-      if (cell.isBomb) {
-        row.append($('<img class="bomb"></img>'));
-      } else if (cell.isFlagged) {
-        row.append($('<img class="flagged"></img>'));
-      } else if (cell.isRevealed) {
-        row.append($('<img class="revealed"></img>'));
-      } else {
-        row.append($('<img class="cell"></img>'));
-      }
+      row.append(makeCell(cell));
     }
     board.append(row);
   }
+}
+
+function makeCell(cell) {
+  const div = $('<div class="cell-wrapper"></div>');
+  if (cell.isBomb) {
+    div.append($('<img class="bomb"></img>'));
+  } else if (cell.isFlagged) {
+    div.append($('<img class="flagged"></img>'));
+  } else if (cell.isRevealed) {
+    div.append($('<img class="revealed"></img>'));
+  } else {
+    div.append($('<img class="cell"></img>'));
+  }
+
+  const bombCount = $('<div class="bomb-count"></div>');
+  bombCount.text(cell.number);
+  div.append(bombCount);
+
+  return div;
 }
 
 
