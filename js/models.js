@@ -4,5 +4,7 @@ class Cell {
     this.isBomb = false;
     this.isFlagged = false;
     this.isRevealed = false;
+    // Only care about this number if isBomb is false
+    this.number = 0;
   }
 }

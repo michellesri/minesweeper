@@ -4,21 +4,40 @@
     this.dimension = dimension;
     this.numBombs = numBombs;
 
-    // Initialize the board
+    this.initializeBoard();
+
+    // testing 
+    this.board[3][4].isRevealed = true;
+    this.board[1][5].isFlagged = true;
+  }
+
+  initializeBoard() {
+    this.createBoard();
+
+    const bombs = this.generateBombs();
+    for (let i = 0; i < bombs.length; i++) {
+      const bomb = bombs[i];
+      this.board[bomb[0]][bomb[1]].isBomb = true;
+      runOnAllAdjacentBlocks(bomb[0], bomb[1], this.dimension, (row, col) => {
+        const cell = this.board[row][col];
+        if (!cell.isBomb) {
+          cell.number++;
+        }
+      })
+    }
+
+    console.log(this.board);
+  }
+
+  createBoard() {
     this.board = [];
-    for (let i = 0; i < dimension; i++) {
+    for (let i = 0; i < this.dimension; i++) {
       const innerArr = [];
-      for (let j = 0; j < dimension; j++) {
+      for (let j = 0; j < this.dimension; j++) {
         innerArr.push(new Cell());
       }
       this.board.push(innerArr);
     }
-
-    console.log(this.generateBombs())
-
-    this.board[2][3].isBomb = true
-    this.board[3][4].isRevealed = true
-    this.board[1][5].isFlagged = true
   }
 
   // Array of array, each subarray represents [row, column].
