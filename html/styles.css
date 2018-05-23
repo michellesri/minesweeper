@@ -1,3 +1,12 @@
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+body input {
+  max-width: 100px;
+}
+
 .row {
   display: flex;
   flex-flow: row;
@@ -32,4 +41,10 @@
 
 .revealed {
   content: url("./images/cell-revealed.png");
+}
+
+#playBtn {
+  font-size: 16px;
+  margin: 6px 0;
+  max-width: 100px;
 }

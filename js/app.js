@@ -1,13 +1,19 @@
-
+function initializeListeners() {
+  $('#playBtn').on('click', () => {
+    playGame();
+  })
+}
 
 function playGame() {
-  const minesweeper = new Minesweeper(10, 10);
+  const dimensionsInput = $('#dimensionsInput').val();
+  const bombsInput = $('#bombsInput').val();
+  const minesweeper = new Minesweeper(dimensionsInput, bombsInput);
   const board = $('#board');
   board.empty();
 
-  for (let i = 0; i < 10; i++) {
+  for (let i = 0; i < dimensionsInput; i++) {
     const row = $('<div class="row"></div>');
-    for (let j = 0; j < 10; j++) {
+    for (let j = 0; j < dimensionsInput; j++) {
       const cell = minesweeper.board[i][j];
       row.append(makeCell(cell));
     }
@@ -34,5 +40,4 @@ function makeCell(cell) {
   return div;
 }
 
-
-playGame();
+initializeListeners();
