@@ -3,6 +3,8 @@
   constructor(dimension, numBombs) {
     this.dimension = dimension;
     this.numBombs = numBombs;
+    this.won = false;
+    this.lost = false;
 
     this.initializeBoard();
 
@@ -25,8 +27,6 @@
         }
       })
     }
-
-    console.log(this.board);
   }
 
   createBoard() {
@@ -68,5 +68,29 @@
       }
     }
     return false;
+  }
+
+  onCellClicked(row, col) {
+    const cell = this.board[row][col];
+    if (cell.isRevealed) {
+      return;
+    }
+
+    cell.isRevealed = true;
+    if (cell.isBomb) {
+      this.lost = true;
+      return;
+    } else {
+      // do something?
+    }
+  }
+
+  onCellRightClicked(row, col) {
+    const cell = this.board[row][col];
+    if (cell.isRevealed) {
+      return;
+    }
+
+    cell.isFlagged = !cell.isFlagged;
   }
 }
