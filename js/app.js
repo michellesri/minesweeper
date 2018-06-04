@@ -1,4 +1,7 @@
-const board = $('#board');
+const boardDom = $('#board');
+const terminationTextDom = $('#termination-text');
+const numUnrevealedBlocksDom = $('#num-unrevealed-blocks');
+const numBombsLeftDom = $('#num-bombs-left');
 
 function initializeListeners() {
   $('#playBtn').on('click', () => {
@@ -19,15 +22,34 @@ function playGame() {
 
 function drawBoard(minesweeper) {
   console.log("Drawing board");
-  board.empty();
+  boardDom.empty();
 
   for (let i = 0; i < minesweeper.dimension; i++) {
     const row = $('<div class="row"></div>');
     for (let j = 0; j < minesweeper.dimension; j++) {
       row.append(makeCell(minesweeper, i, j));
     }
-    board.append(row);
+    boardDom.append(row);
   }
+
+  if (minesweeper.won) {
+    terminationTextDom.text("You've won!");
+  } else if (minesweeper.lost) {
+    terminationTextDom.text("You've lost.");
+  }
+
+  let numUnrevealedBlocks = 0;
+  let numBombsLeft = minesweeper.numBombs;
+  forEachCell(minesweeper.board, cell => {
+    if (!cell.isRevealed) {
+      numUnrevealedBlocks++;
+    }
+    if (cell.isFlagged) {
+      numBombsLeft--;
+    }
+  })
+  numUnrevealedBlocksDom.text(numUnrevealedBlocks);
+  numBombsLeftDom.text(numBombsLeft);
 }
 
 function makeCell(minesweeper, row, col) {
@@ -70,3 +92,8 @@ function makeCell(minesweeper, row, col) {
 }
 
 initializeListeners();
+
+
+// for testing
+const minesweeper = new Minesweeper(10, 10);
+drawBoard(minesweeper);

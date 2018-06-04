@@ -5,15 +5,33 @@
 	<title>Minesweeper</title>
 </head>
 <body>
-  <div>
-    Board dimensions:
-    <input id='dimensionsInput' type="number" min="1">
+  <h2>Minesweeper</h2>
+  <p>To start a new game, please enter the desired dimension of the board and the number of bombs.
+  <div class="row">
+    <div>
+      <div>
+        Board dimensions:
+        <input id='dimensionsInput' type="number" min="1">
+      </div>
+      <div>
+        Number of bombs:
+        <input id='bombsInput' type="number" min="1">
+      </div>
+    </div>
+    <button id='playBtn'>Play</button>
   </div>
-  <div>
-    Number of bombs:
-    <input id='bombsInput' type="number" min="1">
+
+  <div id="game-state">
+    <h1 id="termination-text"></h1>
+    <div class="row">
+      Number of unrevealed blocks:
+      <h3 id="num-unrevealed-blocks"></h3>
+    </div>
+    <div class="row">
+      Number of bombs left:
+      <h3 id="num-bombs-left"></h3>
+    </div>
   </div>
-  <button id='playBtn'>Play</button>
   <div id='board'></div>
 
   <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
