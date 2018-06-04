@@ -9,11 +9,16 @@ function initializeListeners() {
 function playGame() {
   const dimensionsInput = $('#dimensionsInput').val();
   const bombsInput = $('#bombsInput').val();
+  if (dimensionsInput < 1 || bombsInput < 1) {
+    return;
+  }
+
   const minesweeper = new Minesweeper(dimensionsInput, bombsInput);
   drawBoard(minesweeper);
 }
 
 function drawBoard(minesweeper) {
+  console.log("Drawing board");
   board.empty();
 
   for (let i = 0; i < minesweeper.dimension; i++) {
@@ -29,19 +34,24 @@ function makeCell(minesweeper, row, col) {
   const cell = minesweeper.board[row][col];
   const div = $('<div class="cell-wrapper"></div>');
   if (cell.isRevealed) {
-    if (cell.isBomb && cell.isFlagged) {
-      div.append($('<img class="misflagged"></img>'));
-    } else if (cell.isBomb) {
+    if (cell.isBomb) {
       div.append($('<img class="bomb"></img>'));
     } else {
       div.append($('<img class="revealed"></img>'));
-      const bombCount = $('<div class="bomb-count"></div>');
-      bombCount.text(cell.number);
-      div.append(bombCount);
+
+      if (cell.number > 0) {
+        const bombCount = $('<div class="bomb-count"></div>');
+        bombCount.text(cell.number);
+        div.append(bombCount);
+      }
     }
 
   } else if (cell.isFlagged) {
-    div.append($('<img class="flagged"></img>'));
+    if (minesweeper.lost) {
+      div.append($('<img class="misflagged"></img>'));
+    } else {
+      div.append($('<img class="flagged"></img>'));
+    }
   } else {
     div.append($('<img class="cell"></img>'));
   }

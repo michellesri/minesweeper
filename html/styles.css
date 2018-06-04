@@ -21,6 +21,9 @@ body input {
   width: 39px;
   height: 39px;
   position: absolute;
+  text-align: center;
+  vertical-align: middle;
+  line-height: 39px;
 }
 
 .cell {

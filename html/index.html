@@ -5,8 +5,14 @@
 	<title>Minesweeper</title>
 </head>
 <body>
-  <div>Board dimensions: <input id='dimensionsInput'></div>
-  <div>Number of bombs: <input id='bombsInput'></div>
+  <div>
+    Board dimensions:
+    <input id='dimensionsInput' type="number" min="1">
+  </div>
+  <div>
+    Number of bombs:
+    <input id='bombsInput' type="number" min="1">
+  </div>
   <button id='playBtn'>Play</button>
   <div id='board'></div>
 
