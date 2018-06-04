@@ -7,10 +7,6 @@
     this.lost = false;
 
     this.initializeBoard();
-
-    // testing 
-    this.board[3][4].isRevealed = true;
-    this.board[1][5].isFlagged = true;
   }
 
   initializeBoard() {
@@ -71,6 +67,10 @@
   }
 
   onCellClicked(row, col) {
+    if (this.won || this.lost) {
+      return;
+    }
+
     const cell = this.board[row][col];
     if (cell.isRevealed) {
       return;
@@ -78,20 +78,17 @@
 
     cell.reveal();
     if (cell.isBomb) {
-      this.lost = true;
-      return;
+      this.handleLoss();
     } else {
       this.expandZeroNumberCells(row, col);
       let hasWon = true;
-      for (let i = 0; i < this.board.length; i++) {
-        for (let j = 0; j < this.board[i].length; j++) {
-          const cell = this.board[i][j];
-          // Check if there is a cell that is not a bomb and hasn't been revealed.
-          if (!cell.isBomb && !cell.isRevealed) {
-            hasWon = false;
-          }
+      forEachCell(this.board, newCell => {
+        // Check if there is a cell that is not a bomb and hasn't been revealed.
+        if (!newCell.isBomb && !newCell.isRevealed) {
+          hasWon = false;
         }
-      }
+      })
+
       if (hasWon) {
         this.won = true;
       }
@@ -108,7 +105,21 @@
     })
   }
 
+  handleLoss() {
+    this.lost = true;
+
+    forEachCell(this.board, cell => {
+      if (cell.isBomb) {
+        cell.reveal();
+      }
+    })
+  }
+
   onCellRightClicked(row, col) {
+    if (this.won || this.lost) {
+      return;
+    }
+
     const cell = this.board[row][col];
     if (cell.isRevealed) {
       return;
