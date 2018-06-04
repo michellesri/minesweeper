@@ -72,15 +72,10 @@
     }
 
     const cell = this.board[row][col];
-    if (cell.isRevealed) {
-      return;
-    }
-
-    cell.reveal();
     if (cell.isBomb) {
       this.handleLoss();
     } else {
-      this.expandZeroNumberCells(row, col);
+      this.revealNonBombCellsAndAdjacent(row, col);
       let hasWon = true;
       forEachCell(this.board, newCell => {
         // Check if there is a cell that is not a bomb and hasn't been revealed.
@@ -95,14 +90,17 @@
     }
   }
 
-  expandZeroNumberCells(row, col) {
-    runOnAllAdjacentBlocks(row, col, this.dimension, (newRow, newCol) => {
-      const cell = this.board[row][col];
-      if (!cell.isBomb && !cell.isRevealed && cell.number === 0) {
-        cell.reveal();
-        this.expandCells(newRow, newCol);
-      }
-    })
+  revealNonBombCellsAndAdjacent(row, col) {
+    const cell = this.board[row][col];
+    if (cell.isRevealed || cell.isBomb) {
+      return;
+    }
+    cell.reveal();
+    if (cell.number === 0) {
+      runOnAllAdjacentBlocks(row, col, this.dimension, (newRow, newCol) => {
+        this.revealNonBombCellsAndAdjacent(newRow, newCol);
+      })
+    }
   }
 
   handleLoss() {

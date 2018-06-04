@@ -9,7 +9,9 @@ class Cell {
   }
 
   reveal() {
-    this.isFlagged = false;
+    if (!this.isBomb) {
+      this.isFlagged = false;
+    }
     this.isRevealed = true;
   }
 }
