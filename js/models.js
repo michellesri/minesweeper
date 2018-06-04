@@ -7,4 +7,9 @@ class Cell {
     // Only care about this number if isBomb is false
     this.number = 0;
   }
+
+  reveal() {
+    this.isFlagged = false;
+    this.isRevealed = true;
+  }
 }

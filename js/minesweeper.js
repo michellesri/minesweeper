@@ -76,13 +76,36 @@
       return;
     }
 
-    cell.isRevealed = true;
+    cell.reveal();
     if (cell.isBomb) {
       this.lost = true;
       return;
     } else {
-      // do something?
+      this.expandZeroNumberCells(row, col);
+      let hasWon = true;
+      for (let i = 0; i < this.board.length; i++) {
+        for (let j = 0; j < this.board[i].length; j++) {
+          const cell = this.board[i][j];
+          // Check if there is a cell that is not a bomb and hasn't been revealed.
+          if (!cell.isBomb && !cell.isRevealed) {
+            hasWon = false;
+          }
+        }
+      }
+      if (hasWon) {
+        this.won = true;
+      }
     }
+  }
+
+  expandZeroNumberCells(row, col) {
+    runOnAllAdjacentBlocks(row, col, this.dimension, (newRow, newCol) => {
+      const cell = this.board[row][col];
+      if (!cell.isBomb && !cell.isRevealed && cell.number === 0) {
+        cell.reveal();
+        this.expandCells(newRow, newCol);
+      }
+    })
   }
 
   onCellRightClicked(row, col) {
