@@ -92,12 +92,12 @@ class App {
 
     div.on('click', () => {
       minesweeper.onCellClicked(row, col);
-      drawBoard(minesweeper);
+      this.drawBoard(minesweeper);
     });
     div.on('contextmenu', e => {
       e.preventDefault();
       minesweeper.onCellRightClicked(row, col);
-      drawBoard(minesweeper);
+      this.drawBoard(minesweeper);
     });
 
     return div;
