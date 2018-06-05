@@ -1,99 +1,105 @@
-const boardDom = $('#board');
-const terminationTextDom = $('#termination-text');
-const numUnrevealedBlocksDom = $('#num-unrevealed-blocks');
-const numBombsLeftDom = $('#num-bombs-left');
+/*
 
-function initializeListeners() {
-  $('#playBtn').on('click', () => {
-    playGame();
-  })
-}
+App represents the primary logic for hooking up the various elements
+on the page with the appropriate handlers. It contains the initialization
+code to start a new game, calls back to the minesweeper class whenever
+there is any kind of interaction (such as click), and redraws the game
+board whenever anything changes.
 
-function playGame() {
-  const dimensionsInput = $('#dimensionsInput').val();
-  const bombsInput = $('#bombsInput').val();
-  if (dimensionsInput < 1 || bombsInput < 1) {
-    return;
+*/
+
+class App {
+
+  constructor() {
+    this.boardDom = $('#board');
+    this.terminationTextDom = $('#termination-text');
+    this.numUnrevealedBlocksDom = $('#num-unrevealed-blocks');
+    this.numBombsLeftDom = $('#num-bombs-left');
+
+    $('#playBtn').on('click', () => {
+      this.playGame();
+    })
   }
 
-  const minesweeper = new Minesweeper(dimensionsInput, bombsInput);
-  drawBoard(minesweeper);
-}
-
-function drawBoard(minesweeper) {
-  console.log("Drawing board");
-  boardDom.empty();
-
-  for (let i = 0; i < minesweeper.dimension; i++) {
-    const row = $('<div class="row"></div>');
-    for (let j = 0; j < minesweeper.dimension; j++) {
-      row.append(makeCell(minesweeper, i, j));
+  playGame() {
+    const dimensionsInput = $('#dimensionsInput').val();
+    const bombsInput = $('#bombsInput').val();
+    if (dimensionsInput < 1 || bombsInput < 1) {
+      return;
     }
-    boardDom.append(row);
+
+    const minesweeper = new Minesweeper(dimensionsInput, bombsInput);
+    this.drawBoard(minesweeper);
   }
 
-  if (minesweeper.won) {
-    terminationTextDom.text("You've won!");
-  } else if (minesweeper.lost) {
-    terminationTextDom.text("You've lost.");
-  }
+  drawBoard(minesweeper) {
+    console.log("Drawing board");
+    this.boardDom.empty();
 
-  let numUnrevealedBlocks = 0;
-  let numBombsLeft = minesweeper.numBombs;
-  forEachCell(minesweeper.board, cell => {
-    if (!cell.isRevealed) {
-      numUnrevealedBlocks++;
-    }
-    if (cell.isFlagged) {
-      numBombsLeft--;
-    }
-  })
-  numUnrevealedBlocksDom.text(numUnrevealedBlocks);
-  numBombsLeftDom.text(numBombsLeft);
-}
-
-function makeCell(minesweeper, row, col) {
-  const cell = minesweeper.board[row][col];
-  const div = $('<div class="cell-wrapper"></div>');
-  if (cell.isRevealed) {
-    if (cell.isBomb) {
-      div.append($('<img class="bomb"></img>'));
-    } else {
-      div.append($('<img class="revealed"></img>'));
-
-      if (cell.number > 0) {
-        const bombCount = $('<div class="bomb-count"></div>');
-        bombCount.text(cell.number);
-        div.append(bombCount);
+    for (let i = 0; i < minesweeper.dimension; i++) {
+      const row = $('<div class="row"></div>');
+      for (let j = 0; j < minesweeper.dimension; j++) {
+        row.append(this.makeCell(minesweeper, i, j));
       }
+      this.boardDom.append(row);
     }
 
-  } else if (cell.isFlagged) {
-    if (minesweeper.lost) {
-      div.append($('<img class="misflagged"></img>'));
-    } else {
-      div.append($('<img class="flagged"></img>'));
+    if (minesweeper.won) {
+      this.terminationTextDom.text("You've won!");
+    } else if (minesweeper.lost) {
+      this.terminationTextDom.text("You've lost.");
     }
-  } else {
-    div.append($('<img class="cell"></img>'));
+
+    let numUnrevealedBlocks = 0;
+    let numBombsLeft = minesweeper.numBombs;
+    forEachCell(minesweeper.board, cell => {
+      if (!cell.isRevealed) {
+        numUnrevealedBlocks++;
+      }
+      if (cell.isFlagged) {
+        numBombsLeft--;
+      }
+    })
+    this.numUnrevealedBlocksDom.text(numUnrevealedBlocks);
+    this.numBombsLeftDom.text(numBombsLeft);
   }
 
-  div.on('click', () => {
-    minesweeper.onCellClicked(row, col);
-    drawBoard(minesweeper);
-  });
-  div.on('contextmenu', e => {
-    e.preventDefault();
-    minesweeper.onCellRightClicked(row, col);
-    drawBoard(minesweeper);
-  });
+  makeCell(minesweeper, row, col) {
+    const cell = minesweeper.board[row][col];
+    const div = $('<div class="cell-wrapper"></div>');
+    if (cell.isRevealed) {
+      if (cell.isBomb) {
+        div.append($('<img class="bomb"></img>'));
+      } else {
+        div.append($('<img class="revealed"></img>'));
 
-  return div;
+        if (cell.number > 0) {
+          const bombCount = $('<div class="bomb-count"></div>');
+          bombCount.text(cell.number);
+          div.append(bombCount);
+        }
+      }
+
+    } else if (cell.isFlagged) {
+      if (minesweeper.lost) {
+        div.append($('<img class="misflagged"></img>'));
+      } else {
+        div.append($('<img class="flagged"></img>'));
+      }
+    } else {
+      div.append($('<img class="cell"></img>'));
+    }
+
+    div.on('click', () => {
+      minesweeper.onCellClicked(row, col);
+      drawBoard(minesweeper);
+    });
+    div.on('contextmenu', e => {
+      e.preventDefault();
+      minesweeper.onCellRightClicked(row, col);
+      drawBoard(minesweeper);
+    });
+
+    return div;
+  }
 }
-
-initializeListeners();
-
-
-// for testing
-const minesweeper = new Minesweeper(10, 10);
-drawBoard(minesweeper);
