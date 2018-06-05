@@ -13,6 +13,7 @@ class App {
   constructor() {
     this.boardDom = $('#board');
     this.terminationTextDom = $('#termination-text');
+    this.timerDom = $('#timer');
     this.numUnrevealedBlocksDom = $('#num-unrevealed-blocks');
     this.numBombsLeftDom = $('#num-bombs-left');
 
@@ -30,6 +31,14 @@ class App {
 
     const minesweeper = new Minesweeper(dimensionsInput, bombsInput);
     this.drawBoard(minesweeper);
+
+    // Start timer
+    this.timeElapsed = 0;
+    this.timerDom.text(toMMSS(this.timeElapsed));
+    this.timer = setInterval(() => {
+      this.timeElapsed++;
+      this.timerDom.text(toMMSS(this.timeElapsed));
+    }, 1000);
   }
 
   drawBoard(minesweeper) {
@@ -46,8 +55,10 @@ class App {
 
     if (minesweeper.won) {
       this.terminationTextDom.text("You've won!");
+      clearInterval(this.timer);
     } else if (minesweeper.lost) {
       this.terminationTextDom.text("You've lost.");
+      clearInterval(this.timer);
     }
 
     let numUnrevealedBlocks = 0;
