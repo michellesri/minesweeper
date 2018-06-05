@@ -1,4 +1,14 @@
- class Minesweeper {
+/*
+
+Minesweeper class represents the state of a single game board. It initializes
+itself according to the provided dimensions and number of bombs (randomly
+chooses the bomb locations so that they don't overlap). It contains callbacks
+for when a cell gets revealed or flagged so that the game board's internal
+state gets updated accordingly.
+
+*/
+
+class Minesweeper {
 
   constructor(dimension, numBombs) {
     this.dimension = dimension;

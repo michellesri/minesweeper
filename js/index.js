@@ -1,4 +1,8 @@
-// Main code that is run when the page gets loaded
+/*
+
+Main code that is run when the page gets loaded
+
+*/
 
 const app = new App();
 

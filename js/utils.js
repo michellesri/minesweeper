@@ -1,3 +1,9 @@
+/*
+
+Some helpful utility methods.
+
+*/
+
 function runOnAllAdjacentBlocks(row, col, dimension, func) {
   if (row != 0 && col != 0) {
     func(row - 1, col - 1);
