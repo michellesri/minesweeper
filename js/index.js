@@ -8,5 +8,5 @@ const app = new App();
 
 
 // for testing
-const minesweeper = new Minesweeper(10, 10);
+const minesweeper = new Minesweeper(10);
 app.drawBoard(minesweeper);

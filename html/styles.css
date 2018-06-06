@@ -53,11 +53,16 @@ body input {
   content: url("./images/cell-revealed.png");
 }
 
+#dimensionsInput {
+  height: 30px;
+  margin: 16px;
+}
+
 #playBtn {
   font-size: 16px;
   margin: 6px;
   width: 140px;
-  height: 60px;
+  height: 40px;
 }
 
 #game-state {

@@ -10,9 +10,9 @@ state gets updated accordingly.
 
 class Minesweeper {
 
-  constructor(dimension, numBombs) {
+  constructor(dimension) {
     this.dimension = dimension;
-    this.numBombs = numBombs;
+    this.numBombs = Math.floor(dimension * dimension / 7);
     this.won = false;
     this.lost = false;
 

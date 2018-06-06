@@ -17,6 +17,8 @@ class App {
     this.numUnrevealedBlocksDom = $('#num-unrevealed-blocks');
     this.numBombsLeftDom = $('#num-bombs-left');
 
+    this.leaderboard = new Leaderboard();
+
     $('#playBtn').on('click', () => {
       this.playGame();
     })
@@ -24,12 +26,11 @@ class App {
 
   playGame() {
     const dimensionsInput = $('#dimensionsInput').val();
-    const bombsInput = $('#bombsInput').val();
-    if (dimensionsInput < 1 || bombsInput < 1) {
+    if (dimensionsInput < 1) {
       return;
     }
 
-    const minesweeper = new Minesweeper(dimensionsInput, bombsInput);
+    const minesweeper = new Minesweeper(dimensionsInput);
     this.drawBoard(minesweeper);
 
     // Start timer
@@ -54,11 +55,9 @@ class App {
     }
 
     if (minesweeper.won) {
-      this.terminationTextDom.text("You've won!");
-      clearInterval(this.timer);
+      this.onGameEnded(true);
     } else if (minesweeper.lost) {
-      this.terminationTextDom.text("You've lost.");
-      clearInterval(this.timer);
+      this.onGameEnded(false);
     }
 
     let numUnrevealedBlocks = 0;
@@ -112,5 +111,16 @@ class App {
     });
 
     return div;
+  }
+
+  onGameEnded(won) {
+    if (won) {
+      this.terminationTextDom.text("You've won!");
+      this.leaderboard.addWinData(this.minesweeper.dimension, this.timeElapsed);
+    } else {
+      this.terminationTextDom.text("You've lost.");
+    }
+
+    clearInterval(this.timer);
   }
 }
