@@ -43,6 +43,14 @@ class App {
     }, 1000);
   }
 
+  autoSolveGame() {
+    this.solver = new Solver(this.minesweeper);
+    this.solverTimer = setInterval(() => {
+      const move = this.solver.getNextMove();
+      this.playMove(move[0], move[1]);
+    }, 1000);
+  }
+
   drawBoard() {
     console.log("Drawing board");
     this.boardDom.empty();
@@ -102,8 +110,7 @@ class App {
     }
 
     div.on('click', () => {
-      this.minesweeper.onCellClicked(row, col);
-      this.drawBoard(this.minesweeper);
+      this.playMove(row, col);
     });
     div.on('contextmenu', e => {
       e.preventDefault();
@@ -112,6 +119,11 @@ class App {
     });
 
     return div;
+  }
+
+  playMove(row, col) {
+    this.minesweeper.onCellClicked(row, col);
+    this.drawBoard(this.minesweeper);
   }
 
   drawLeaderboard() {
@@ -140,6 +152,7 @@ class App {
     }
 
     clearInterval(this.timer);
+    clearInterval(this.solverTimer);
     this.drawLeaderboard();
   }
 }

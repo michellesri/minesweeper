@@ -9,3 +9,4 @@ const app = new App();
 
 // for testing
 app.playGame(10);
+app.autoSolveGame();
