@@ -34,7 +34,7 @@ function runOnAllAdjacentBlocks(row, col, dimension, func) {
 function forEachCell(matrix, func) {
   for (let i = 0; i < matrix.length; i++) {
     for (let j = 0; j < matrix[i].length; j++) {
-      func(matrix[i][j]);
+      func(matrix[i][j], i, j);
     }
   }
 }
