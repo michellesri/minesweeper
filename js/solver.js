@@ -3,10 +3,11 @@ class Solver {
     this.minesweeper = minesweeper;
   }
 
+  // Returns [isRightClick, row, col]
   getNextMove() {
     const dimen = this.minesweeper.dimension;
     const row = Math.floor(Math.random() * (dimen - 1));
     const col = Math.floor(Math.random() * (dimen - 1));
-    return [row, col];
+    return [false, row, col];
   }
 }

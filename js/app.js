@@ -47,7 +47,11 @@ class App {
     this.solver = new Solver(this.minesweeper);
     this.solverTimer = setInterval(() => {
       const move = this.solver.getNextMove();
-      this.playMove(move[0], move[1]);
+      if (move[0]) {
+        this.click(move[1], move[2]);
+      } else {
+        this.rightClick(move[1], move[2]);
+      }
     }, 1000);
   }
 
@@ -110,19 +114,23 @@ class App {
     }
 
     div.on('click', () => {
-      this.playMove(row, col);
+      this.click(row, col);
     });
     div.on('contextmenu', e => {
       e.preventDefault();
-      this.minesweeper.onCellRightClicked(row, col);
-      this.drawBoard(this.minesweeper);
+      this.rightClick(row, col);
     });
 
     return div;
   }
 
-  playMove(row, col) {
+  click(row, col) {
     this.minesweeper.onCellClicked(row, col);
+    this.drawBoard(this.minesweeper);
+  }
+
+  rightClick(row, col) {
+    this.minesweeper.onCellRightClicked(row, col);
     this.drawBoard(this.minesweeper);
   }
 
