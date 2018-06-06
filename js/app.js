@@ -16,22 +16,26 @@ class App {
     this.timerDom = $('#timer');
     this.numUnrevealedBlocksDom = $('#num-unrevealed-blocks');
     this.numBombsLeftDom = $('#num-bombs-left');
+    this.leaderboardDom = $('#leaderboard');
 
     this.leaderboard = new Leaderboard();
+    this.leaderboard.addWinData(10, 12);
+    this.leaderboard.addWinData(10, 32);
+    this.leaderboard.addWinData(10, 1);
 
     $('#playBtn').on('click', () => {
-      this.playGame();
+      const dimensionsInput = $('#dimensionsInput').val();
+      if (dimensionsInput < 1) {
+        return;
+      }
+      this.playGame(dimensionsInput);
     })
   }
 
-  playGame() {
-    const dimensionsInput = $('#dimensionsInput').val();
-    if (dimensionsInput < 1) {
-      return;
-    }
-
-    const minesweeper = new Minesweeper(dimensionsInput);
-    this.drawBoard(minesweeper);
+  playGame(dimen) {
+    this.minesweeper = new Minesweeper(dimen);
+    this.drawBoard();
+    this.drawLeaderboard();
 
     // Start timer
     this.timeElapsed = 0;
@@ -42,27 +46,27 @@ class App {
     }, 1000);
   }
 
-  drawBoard(minesweeper) {
+  drawBoard() {
     console.log("Drawing board");
     this.boardDom.empty();
 
-    for (let i = 0; i < minesweeper.dimension; i++) {
+    for (let i = 0; i < this.minesweeper.dimension; i++) {
       const row = $('<div class="row"></div>');
-      for (let j = 0; j < minesweeper.dimension; j++) {
-        row.append(this.makeCell(minesweeper, i, j));
+      for (let j = 0; j < this.minesweeper.dimension; j++) {
+        row.append(this.makeCell(i, j));
       }
       this.boardDom.append(row);
     }
 
-    if (minesweeper.won) {
+    if (this.minesweeper.won) {
       this.onGameEnded(true);
-    } else if (minesweeper.lost) {
+    } else if (this.minesweeper.lost) {
       this.onGameEnded(false);
     }
 
     let numUnrevealedBlocks = 0;
-    let numBombsLeft = minesweeper.numBombs;
-    forEachCell(minesweeper.board, cell => {
+    let numBombsLeft = this.minesweeper.numBombs;
+    forEachCell(this.minesweeper.board, cell => {
       if (!cell.isRevealed) {
         numUnrevealedBlocks++;
       }
@@ -74,8 +78,8 @@ class App {
     this.numBombsLeftDom.text(numBombsLeft);
   }
 
-  makeCell(minesweeper, row, col) {
-    const cell = minesweeper.board[row][col];
+  makeCell(row, col) {
+    const cell = this.minesweeper.board[row][col];
     const div = $('<div class="cell-wrapper"></div>');
     if (cell.isRevealed) {
       if (cell.isBomb) {
@@ -91,7 +95,7 @@ class App {
       }
 
     } else if (cell.isFlagged) {
-      if (minesweeper.lost) {
+      if (this.minesweeper.lost) {
         div.append($('<img class="misflagged"></img>'));
       } else {
         div.append($('<img class="flagged"></img>'));
@@ -101,16 +105,33 @@ class App {
     }
 
     div.on('click', () => {
-      minesweeper.onCellClicked(row, col);
-      this.drawBoard(minesweeper);
+      this.minesweeper.onCellClicked(row, col);
+      this.drawBoard(this.minesweeper);
     });
     div.on('contextmenu', e => {
       e.preventDefault();
-      minesweeper.onCellRightClicked(row, col);
-      this.drawBoard(minesweeper);
+      this.minesweeper.onCellRightClicked(row, col);
+      this.drawBoard(this.minesweeper);
     });
 
     return div;
+  }
+
+  drawLeaderboard() {
+    const dimen = this.minesweeper.dimension;
+    const scores = this.leaderboard.getTop10ForDimen(dimen);
+    this.leaderboardDom.empty();
+
+    const header = $('<h3></h3>');
+    header.text("Top scores for " + dimen + "x" + dimen);
+    this.leaderboardDom.append(header);
+
+    for (let i = 0; i < scores.length; i++) {
+      const score = toMMSS(scores[i]);
+      const scoreDom = $('<div></div>');
+      scoreDom.text(score);
+      this.leaderboardDom.append(scoreDom);
+    }
   }
 
   onGameEnded(won) {
@@ -122,5 +143,6 @@ class App {
     }
 
     clearInterval(this.timer);
+    this.drawLeaderboard();
   }
 }

@@ -1,31 +1,36 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<link rel="stylesheet" href="styles.css">
-	<title>Minesweeper</title>
+  <link rel="stylesheet" href="styles.css">
+  <title>Minesweeper</title>
 </head>
-<body>
+<body class="col">
   <h1>Minesweeper</h1>
   <p>To start a new game, please enter the desired dimension of the board and the number of bombs.
-  <div class="row">
-    <h3>Board dimensions:</h3>
-    <input id='dimensionsInput' type="number" min="1">
-    <button id='playBtn'>Play</button>
-  </div>
+  <div id="content" class="row">
+    <div class="col">
+      <div class="row">
+        <h3 style="color: white;">Board dimensions:</h3>
+        <input id='dimensionsInput' type="number" min="1">
+        <button id='playBtn'>Play</button>
+      </div>
 
-  <div id="game-state">
-    <h2 id="termination-text"></h2>
-    <h2 id="timer"></h2>
-    <div class="row">
-      Number of unrevealed blocks:
-      <h3 id="num-unrevealed-blocks"></h3>
+      <div id="game-state" class="col">
+        <h2 id="termination-text"></h2>
+        <h2 id="timer"></h2>
+        <div class="row">
+          Number of unrevealed blocks:
+          <h3 id="num-unrevealed-blocks"></h3>
+        </div>
+        <div class="row">
+          Number of bombs left:
+          <h3 id="num-bombs-left"></h3>
+        </div>
+      </div>
+      <div id='board'></div>
     </div>
-    <div class="row">
-      Number of bombs left:
-      <h3 id="num-bombs-left"></h3>
-    </div>
+    <div id="leaderboard" class="col"></div>
   </div>
-  <div id='board'></div>
 
   <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
   <script src="../js/utils.js"></script>

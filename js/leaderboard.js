@@ -11,8 +11,6 @@ class Leaderboard {
       leaderboardForDimen.push(time);
       leaderboardForDimen.sort();
     }
-
-    console.log(leaderboardForDimen);
   }
 
   getTop10ForDimen(dimension) {

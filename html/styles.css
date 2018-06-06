@@ -1,6 +1,4 @@
 body {
-  display: flex;
-  flex-direction: column;
   align-items: center;
   background-image: url("./images/field.jpg");
   background-repeat: no-repeat;
@@ -15,8 +13,13 @@ body input {
 
 .row {
   display: flex;
-  flex-flow: row;
+  flex-direction: row;
   align-items: center;
+}
+
+.col {
+  display: flex;
+  flex-direction: column;
 }
 
 .cell-wrapper {
@@ -53,6 +56,10 @@ body input {
   content: url("./images/cell-revealed.png");
 }
 
+#content {
+  align-items: stretch;
+}
+
 #dimensionsInput {
   height: 30px;
   margin: 16px;
@@ -66,10 +73,12 @@ body input {
 }
 
 #game-state {
-  display: flex;
-  flex-direction: column;
   align-items: center;
   margin-top: 30px;
+}
+
+#game-state * {
+  color: white;
 }
 
 #game-state h3 {
@@ -79,4 +88,21 @@ body input {
 
 #board {
   margin: 18px;
+}
+
+#leaderboard {
+  align-items: center;
+  border: 1px solid;
+  border-color: white;
+  margin: 0 32px;
+  width: 200px;
+}
+
+#leaderboard h2 {
+  margin-bottom: 32px;
+}
+
+#leaderboard * {
+  color: white;
+  padding: 6px;
 }
