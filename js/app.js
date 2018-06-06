@@ -92,7 +92,11 @@ class App {
     const div = $('<div class="cell-wrapper"></div>');
     if (cell.isRevealed) {
       if (cell.isBomb) {
-        div.append($('<img class="bomb"></img>'));
+        if (cell.isFlagged) {
+          div.append($('<img class="flagged"></img>'));
+        } else {
+          div.append($('<img class="bomb"></img>'));
+        }
       } else {
         div.append($('<img class="revealed"></img>'));
 
