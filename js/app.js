@@ -19,9 +19,6 @@ class App {
     this.leaderboardDom = $('#leaderboard');
 
     this.leaderboard = new Leaderboard();
-    this.leaderboard.addWinData(10, 12);
-    this.leaderboard.addWinData(10, 32);
-    this.leaderboard.addWinData(10, 1);
 
     $('#playBtn').on('click', () => {
       const dimensionsInput = $('#dimensionsInput').val();
