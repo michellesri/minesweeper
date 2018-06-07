@@ -5,6 +5,18 @@ class Solver {
 
   // Returns [isRightClick, row, col]
   getNextMove() {
+    const cellToFlag = this.findCellToFlag();
+    if (cellToFlag) {
+      return [false, cellToFlag[0], cellToFlag[1]];
+    }
+
+    // All hope is lost, generate a random location to click
+    const row = Math.floor(Math.random() * (dimen - 1));
+    const col = Math.floor(Math.random() * (dimen - 1));
+    return [true, row, col];
+  }
+
+  findCellToFlag() {
     const dimen = this.minesweeper.dimension;
 
     // See if there is any cell that we can flag
@@ -44,11 +56,8 @@ class Solver {
     });
 
     if (rowToFlag !== undefined) {
-      return [false, rowToFlag, colToFlag];
+      return [rowToFlag, colToFlag];
     }
-
-    const row = Math.floor(Math.random() * (dimen - 1));
-    const col = Math.floor(Math.random() * (dimen - 1));
-    return [true, row, col];
+    return undefined;
   }
 }
