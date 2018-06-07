@@ -86,17 +86,7 @@ class Minesweeper {
       this.handleLoss();
     } else {
       this.revealNonBombCellsAndAdjacent(row, col);
-      let hasWon = true;
-      forEachCell(this.board, newCell => {
-        // Check if there is a cell that is not a bomb and hasn't been revealed.
-        if (!newCell.isBomb && !newCell.isRevealed) {
-          hasWon = false;
-        }
-      })
-
-      if (hasWon) {
-        this.won = true;
-      }
+      this.checkWin();
     }
   }
 
@@ -123,6 +113,20 @@ class Minesweeper {
     })
   }
 
+  checkWin() {
+    let hasWon = true;
+    forEachCell(this.board, newCell => {
+      // Check if there is a cell that is not a bomb and hasn't been revealed.
+      if (!newCell.isBomb && !newCell.isRevealed) {
+        hasWon = false;
+      }
+    })
+
+    if (hasWon) {
+      this.won = true;
+    }
+  }
+
   onCellRightClicked(row, col) {
     if (this.won || this.lost) {
       return;
@@ -134,5 +138,6 @@ class Minesweeper {
     }
 
     cell.isFlagged = !cell.isFlagged;
+    this.checkWin();
   }
 }
