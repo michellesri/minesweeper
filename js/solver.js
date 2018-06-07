@@ -1,3 +1,10 @@
+/*
+
+Solver bot that tries to generate safe moves for you to make. It will default
+to a random move if no safe move is found.
+
+*/
+
 class Solver {
   constructor(minesweeper) {
     this.minesweeper = minesweeper;
