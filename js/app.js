@@ -36,6 +36,8 @@ class App {
   }
 
   playGame(dimen) {
+    this.resetState();
+
     this.minesweeper = new Minesweeper(dimen);
     this.solver = new Solver(this.minesweeper);
     this.drawBoard();
@@ -50,11 +52,16 @@ class App {
     }, 1000);
   }
 
+  resetState() {
+    clearInterval(this.timer);
+    clearInterval(this.solverTimer);
+  }
+
   autoSolveGame() {
     if (!this.solverTimer) {
       this.solverTimer = setInterval(() => {
         this.autoSolveOneMove();
-      }, 1000);
+      }, 500);
     }
   }
 
@@ -177,8 +184,7 @@ class App {
     }
     this.timerDom.text(timerText);
 
-    clearInterval(this.timer);
-    clearInterval(this.solverTimer);
+    this.resetState();
     this.drawLeaderboard();
   }
 }
