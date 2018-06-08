@@ -11,6 +11,11 @@ body input {
   margin: 6px;
 }
 
+p {
+  font-size: 18px;
+  margin: 18px;
+}
+
 button {
   align-self: center;
   font-size: 16px;
@@ -66,6 +71,7 @@ button {
 
 #content {
   align-items: stretch;
+  margin-top: 30px;
 }
 
 #dimensionsInput {
@@ -75,7 +81,6 @@ button {
 
 #game-state {
   align-items: center;
-  margin-top: 30px;
 }
 
 #game-state * {

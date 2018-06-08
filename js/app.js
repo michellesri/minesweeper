@@ -12,7 +12,6 @@ class App {
 
   constructor() {
     this.boardDom = $('#board');
-    this.terminationTextDom = $('#termination-text');
     this.timerDom = $('#timer');
     this.numUnrevealedBlocksDom = $('#num-unrevealed-blocks');
     this.numBombsLeftDom = $('#num-bombs-left');
@@ -169,12 +168,14 @@ class App {
   }
 
   onGameEnded(won) {
+    let timerText = this.timerDom.text();
     if (won) {
-      this.terminationTextDom.text("You've won!");
+      timerText = "You've won! Time: " + timerText;
       this.leaderboard.addWinData(this.minesweeper.dimension, this.timeElapsed);
     } else {
-      this.terminationTextDom.text("You've lost.");
+      timerText = "You've lost. Time: " + timerText;
     }
+    this.timerDom.text(timerText);
 
     clearInterval(this.timer);
     clearInterval(this.solverTimer);
