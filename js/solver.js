@@ -10,7 +10,7 @@ class Solver {
     this.minesweeper = minesweeper;
   }
 
-  // Returns [isRightClick, row, col]
+  // Returns [isLeftClick, row, col]
   getNextMove() {
     const cellToFlag = this.findCellToFlag();
     if (cellToFlag) {

@@ -43,7 +43,7 @@ class App {
     this.drawBoard();
     this.drawLeaderboard();
 
-    // Start timer
+    // Start and render timer
     this.timeElapsed = 0;
     this.timerDom.text(toMMSS(this.timeElapsed));
     this.timer = setInterval(() => {
@@ -55,13 +55,15 @@ class App {
   resetState() {
     clearInterval(this.timer);
     clearInterval(this.solverTimer);
+    this.timer = null;
+    this.solverTimer = null;
   }
 
   autoSolveGame() {
     if (!this.solverTimer) {
       this.solverTimer = setInterval(() => {
         this.autoSolveOneMove();
-      }, 500);
+      }, 100);
     }
   }
 
