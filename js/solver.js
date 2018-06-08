@@ -47,20 +47,18 @@ class Solver {
         // probably need to change this structure, technically I can just access
         // neighbor.isBomb or neighbor.number since there is no restrictions here.
         if (neighbor.isRevealed && neighbor.number > 0) {
-          let numFlaggedAroundNeighbor = 0;
           let numUnrevealedAroundNeighbor = 0;
           runOnAllAdjacentBlocks(neighborRow, neighborCol, dimen, (i, j) => {
             const neighborOfNeighbor = this.minesweeper.board[i][j];
             if (!neighborOfNeighbor.isRevealed) {
-              if (neighborOfNeighbor.isFlagged) {
-                numFlaggedAroundNeighbor++;
-              } else {
-                numUnrevealedAroundNeighbor++;
-              }
+              numUnrevealedAroundNeighbor++;
             }
           });
-          if (numFlaggedAroundNeighbor === neighbor.number - 1 && numUnrevealedAroundNeighbor === 1) {
-            // All other bombs are accounted for, this must be a bomb
+
+          // If the number of bombs is equal to the number of unrevealed
+          // neighbors, then all of the unrevealed neighbors must be bombs.
+          if (numUnrevealedAroundNeighbor === neighbor.number) {
+            // This must be a bomb
             rowToFlag = row;
             colToFlag = col;
           }

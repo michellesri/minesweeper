@@ -175,7 +175,7 @@ class App {
   }
 
   onGameEnded(won) {
-    let timerText = this.timerDom.text();
+    let timerText = toMMSS(this.timeElapsed);
     if (won) {
       timerText = "You've won! Time: " + timerText;
       this.leaderboard.addWinData(this.minesweeper.dimension, this.timeElapsed);
