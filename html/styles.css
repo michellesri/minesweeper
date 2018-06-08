@@ -11,6 +11,14 @@ body input {
   margin: 6px;
 }
 
+button {
+  align-self: center;
+  font-size: 16px;
+  margin: 6px;
+  width: 140px;
+  height: 40px;
+}
+
 .row {
   display: flex;
   flex-direction: row;
@@ -63,13 +71,6 @@ body input {
 #dimensionsInput {
   height: 30px;
   margin: 16px;
-}
-
-#playBtn {
-  font-size: 16px;
-  margin: 6px;
-  width: 140px;
-  height: 40px;
 }
 
 #game-state {

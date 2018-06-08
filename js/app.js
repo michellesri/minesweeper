@@ -27,10 +27,18 @@ class App {
       }
       this.playGame(dimensionsInput);
     })
+
+    $('#auto-solve-one-move-btn').on('click', () => {
+      this.autoSolveOneMove();
+    });
+    $('#auto-solve-everything-btn').on('click', () => {
+      this.autoSolveGame();
+    })
   }
 
   playGame(dimen) {
     this.minesweeper = new Minesweeper(dimen);
+    this.solver = new Solver(this.minesweeper);
     this.drawBoard();
     this.drawLeaderboard();
 
@@ -44,15 +52,20 @@ class App {
   }
 
   autoSolveGame() {
-    this.solver = new Solver(this.minesweeper);
-    this.solverTimer = setInterval(() => {
-      const move = this.solver.getNextMove();
-      if (move[0]) {
-        this.click(move[1], move[2]);
-      } else {
-        this.rightClick(move[1], move[2]);
-      }
-    }, 1000);
+    if (!this.solverTimer) {
+      this.solverTimer = setInterval(() => {
+        this.autoSolveOneMove();
+      }, 1000);
+    }
+  }
+
+  autoSolveOneMove() {
+    const move = this.solver.getNextMove();
+    if (move[0]) {
+      this.click(move[1], move[2]);
+    } else {
+      this.rightClick(move[1], move[2]);
+    }
   }
 
   drawBoard() {
