@@ -63,7 +63,7 @@ class App {
     if (!this.solverTimer) {
       this.solverTimer = setInterval(() => {
         this.autoSolveOneMove();
-      }, 100);
+      }, 500);
     }
   }
 
